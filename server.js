@@ -19,7 +19,7 @@ const EVO_INSTANCE = process.env.EVOLUTION_INSTANCE || '';
 const EVO_KEY = process.env.EVOLUTION_API_KEY || '';
 const DESTINOS = (process.env.WHATSAPP_DESTINOS || '5581988090458,5581985008282').split(',');
 
-const MIME = { '.html': 'text/html; charset=utf-8', '.png': 'image/png', '.css': 'text/css', '.js': 'text/javascript' };
+const MIME = { '.html': 'text/html; charset=utf-8', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.css': 'text/css', '.js': 'text/javascript' };
 const ROOT = __dirname;
 
 async function enviar(nome, telefone) {
