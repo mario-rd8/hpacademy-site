@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HP Academy | Pré-Matrícula</title>
+<link rel="icon" href="assets/HPAcademy_vertical.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root { --navy:#062D62; --orange:#EA5D2A; --bg:#F7F8FA; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'Gotham','Montserrat',sans-serif; background:var(--bg); color:var(--navy); }
+  .banner { width:100%; height:clamp(260px,55vh,620px); background:url('assets/hp-banner.png') center/cover no-repeat; }
+  main { display:flex; justify-content:center; padding:0 20px; margin-top:-80px; }
+  .card { background:#fff; width:100%; max-width:440px; padding:40px 32px; border-radius:16px; box-shadow:0 20px 50px rgba(6,45,98,.12); }
+  .tag { display:block; text-align:center; font-weight:800; letter-spacing:.2em; color:var(--orange); font-size:1.4rem; margin-bottom:28px; }
+  .tag::after { content:''; display:block; width:40px; height:3px; background:var(--navy); margin:12px auto 0; }
+  label { display:block; font-size:.8rem; font-weight:500; text-transform:uppercase; letter-spacing:.08em; margin-bottom:6px; }
+  input { width:100%; padding:14px 16px; border:1.5px solid #DDE3EC; border-radius:10px; font:inherit; font-size:1rem; color:var(--navy); margin-bottom:20px; transition:border-color .2s; }
+  input:focus { outline:none; border-color:var(--orange); }
+  button { width:100%; padding:16px; border:0; border-radius:10px; background:var(--navy); color:#fff; font:inherit; font-weight:700; letter-spacing:.12em; text-transform:uppercase; cursor:pointer; transition:background .2s; }
+  button:hover { background:var(--orange); }
+  button:disabled { opacity:.6; cursor:wait; }
+  .thanks { display:none; text-align:center; font-size:1.15rem; font-weight:500; line-height:1.6; }
+  .thanks strong { display:block; color:var(--orange); font-size:1.6rem; font-weight:800; margin-bottom:8px; }
+  .err { color:#c0392b; font-size:.85rem; text-align:center; margin-top:12px; min-height:1em; }
+  footer { margin-top:64px; padding:40px 20px; text-align:center; border-top:1px solid #E6EAF0; }
+  footer img { height:80px; margin-bottom:14px; }
+  footer a { color:var(--navy); text-decoration:none; font-weight:700; letter-spacing:.05em; }
+</style>
+</head>
+<body>
+  <div class="banner" role="img" aria-label="HP Academy"></div>
+  <main>
+    <section class="card">
+      <form id="form">
+        <span class="tag">PRÉ-MATRÍCULA</span>
+        <label for="nome">Nome</label>
+        <input id="nome" name="nome" required autocomplete="name" placeholder="Seu nome completo">
+        <label for="telefone">Telefone</label>
+        <input id="telefone" name="telefone" required type="tel" autocomplete="tel" placeholder="(81) 90000-0000" maxlength="15">
+        <button type="submit">Enviar</button>
+        <p class="err" id="err"></p>
+      </form>
+      <div class="thanks" id="thanks"><strong>Obrigado!</strong>Em breve alguém entrará em contato com você.</div>
+    </section>
+  </main>
+  <footer>
+    <img src="assets/HPAcademy_vertical.png" alt="HP Academy"><br>
+    <a href="tel:+5581985008282">(81) 98500-8282</a>
+  </footer>
+<script>
+  const tel = document.getElementById('telefone');
+  tel.addEventListener('input', () => {
+    let v = tel.value.replace(/\D/g,'').slice(0,11);
+    if (v.length > 6) v = `(${v.slice(0,2)}) ${v.slice(2,7)}-${v.slice(7)}`;
+    else if (v.length > 2) v = `(${v.slice(0,2)}) ${v.slice(2)}`;
+    tel.value = v;
+  });
+  document.getElementById('form').addEventListener('submit', async e => {
+    e.preventDefault();
+    const f = e.target, btn = f.querySelector('button'), err = document.getElementById('err');
+    if (tel.value.replace(/\D/g,'').length < 10) { err.textContent = 'Informe um telefone válido.'; return; }
+    btn.disabled = true; err.textContent = '';
+    try {
+      const r = await fetch('/api/lead', { method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ nome:f.nome.value.trim(), telefone:tel.value }) });
+      if (!r.ok) throw 0;
+      f.style.display = 'none';
+      document.getElementById('thanks').style.display = 'block';
+    } catch { err.textContent = 'Erro ao enviar. Tente novamente.'; btn.disabled = false; }
+  });
+</script>
+</body>
+</html>
