@@ -235,7 +235,7 @@ img {
 
 .nav-desktop a {
     font-size: 0.82rem;
-    font-weight: 500;
+    font-weight: 600;
     color: var(--hp-blue);
     letter-spacing: 0.01em;
 }
@@ -261,7 +261,7 @@ img {
     padding: 5px 6px 5px 16px;
     border-radius: 50px;
     font-size: 0.78rem;
-    font-weight: 500;
+    font-weight: 600;
     letter-spacing: 0.02em;
     transition: var(--transition-smooth);
 }
@@ -1887,11 +1887,29 @@ img {
 
 .bottom-links {
     display: flex;
+    align-items: center;
     gap: 24px;
 }
 
 .bottom-links a:hover {
     color: #ffffff;
+}
+
+.evaflow-credit {
+    display: inline-flex;
+    align-items: center;
+}
+
+.evaflow-credit img {
+    height: 15px;
+    width: auto;
+    filter: brightness(0) invert(1);
+    opacity: 0.72;
+    transition: opacity 0.25s ease;
+}
+
+.evaflow-credit:hover img {
+    opacity: 1;
 }
 
 /* ===============================================================
