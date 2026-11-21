@@ -1,83 +1,930 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HP Academy | Pré-Matrícula</title>
-<link rel="icon" type="image/png" href="assets/HPAcademy_icone-negativo.png">
-<link rel="apple-touch-icon" href="assets/HPAcademy_icone-negativo.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800&display=swap" rel="stylesheet">
-<style>
-  :root { --navy:#062D62; --orange:#EA5D2A; --bg:#F7F8FA; }
-  * { box-sizing:border-box; margin:0; padding:0; }
-  body { font-family:'Gotham','Montserrat',sans-serif; background:var(--bg); color:var(--navy); }
-  .hero { position:relative; min-height:100vh; min-height:100svh; display:flex; align-items:center; justify-content:flex-end; padding:40px 8vw; background:url('assets/hp-banner.png') 30% center/cover no-repeat; }
-  .hero::before { content:''; position:absolute; inset:0; background:linear-gradient(90deg, transparent 45%, rgba(6,45,98,.35)); }
-  .card { position:relative; background:#fff; width:100%; max-width:420px; padding:40px 32px; border-radius:16px; box-shadow:0 25px 60px rgba(0,0,0,.25); }
-  @media (max-width:820px) {
-    .hero { display:block; min-height:0; padding:0; background:none; }
-    .hero::before { display:none; }
-    .hero-img { display:block; width:100%; aspect-ratio:1/1; background:url('assets/topo-mobile.jpg') center/cover no-repeat; }
-    .card { margin:-60px auto 0; width:calc(100% - 40px); box-shadow:0 20px 50px rgba(6,45,98,.15); }
-  }
-  .tag { display:block; text-align:center; font-weight:800; letter-spacing:.2em; color:var(--orange); font-size:1.4rem; margin-bottom:28px; }
-  .tag::after { content:''; display:block; width:40px; height:3px; background:var(--navy); margin:12px auto 0; }
-  label { display:block; font-size:.8rem; font-weight:500; text-transform:uppercase; letter-spacing:.08em; margin-bottom:6px; }
-  input { width:100%; padding:14px 16px; border:1.5px solid #DDE3EC; border-radius:10px; font:inherit; font-size:1rem; color:var(--navy); margin-bottom:20px; transition:border-color .2s; }
-  input:focus { outline:none; border-color:var(--orange); }
-  button { width:100%; padding:16px; border:0; border-radius:10px; background:var(--navy); color:#fff; font:inherit; font-weight:700; letter-spacing:.12em; text-transform:uppercase; cursor:pointer; transition:background .2s; }
-  button:hover { background:var(--orange); }
-  button:disabled { opacity:.6; cursor:wait; }
-  .thanks { display:none; text-align:center; font-size:1.15rem; font-weight:500; line-height:1.6; }
-  .thanks strong { display:block; color:var(--orange); font-size:1.6rem; font-weight:800; margin-bottom:8px; }
-  .err { color:#c0392b; font-size:.85rem; text-align:center; margin-top:12px; min-height:1em; }
-  footer { margin-top:64px; padding:40px 20px; text-align:center; border-top:1px solid #E6EAF0; }
-  footer img { height:80px; margin-bottom:14px; }
-  footer a { color:var(--navy); text-decoration:none; font-weight:700; letter-spacing:.05em; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HP Academy | Desenvolvimento Estudantil e Vestibulares</title>
+    <meta name="description"
+        content="HP Academy Students: academia de desenvolvimento estudantil em Boa Viagem – Recife. Matrículas abertas para o HP Academy Vestibulares (ENEM, SSA/UPE e Universidades Paulistas).">
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="assets/hp-favicon.svg">
+    <link rel="icon" type="image/png" href="assets/HPAcademy_icone-negativo.png">
+    <link rel="apple-touch-icon" href="assets/HPAcademy_icone-negativo.png">
+
+    <!-- Tipografia: Montserrat (pesos leves a bold, similar à Gotham) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-  <main class="hero" aria-label="HP Academy">
-    <div class="hero-img"></div>
-    <section class="card">
-      <form id="form">
-        <span class="tag">PRÉ-MATRÍCULA</span>
-        <label for="nome">Nome</label>
-        <input id="nome" name="nome" required autocomplete="name" placeholder="Seu nome completo">
-        <label for="telefone">Telefone</label>
-        <input id="telefone" name="telefone" required type="tel" autocomplete="tel" placeholder="(81) 90000-0000" maxlength="15">
-        <button type="submit">Enviar</button>
-        <p class="err" id="err"></p>
-      </form>
-      <div class="thanks" id="thanks"><strong>Obrigado!</strong>Em breve alguém entrará em contato com você.</div>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu-overlay" class="mobile-menu-overlay">
+        <div class="mobile-menu-box">
+            <nav class="mobile-menu-nav">
+                <a href="#programas">Programas</a>
+                <a href="#vestibulares">Vestibulares</a>
+                <a href="#professores">Professores</a>
+                <a href="#metodologia">Metodologia</a>
+                <a href="#estrutura">Estrutura</a>
+                <a href="#contato">Pré-Matrícula</a>
+                <a href="https://aluno.forcaisoladas.com.br/" target="_blank" rel="noopener noreferrer" class="mobile-portal-link">Portal do Aluno</a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Mobile FAB -->
+    <button id="mobile-fab" class="mobile-fab" aria-label="Abrir menu">
+        <span class="fab-bar fab-bar-1"></span>
+        <span class="fab-bar fab-bar-2"></span>
+        <span class="fab-bar fab-bar-3"></span>
+    </button>
+
+    <!-- 1. Header / Nav -->
+    <header id="main-header" class="header-floating">
+        <div class="container header-wrapper">
+            <a href="#hero" class="logo" title="Ir para o topo">
+                <img src="assets/HPAcademy_horizontal.svg" alt="HP Academy" class="logo-positiva">
+                <img src="assets/HPAcademy_horizontal-negativa.svg" alt="HP Academy" class="logo-negativa">
+            </a>
+
+            <div class="header-container">
+                <nav class="nav-desktop">
+                    <ul>
+                        <li><a href="#programas">Programas</a></li>
+                        <li><a href="#vestibulares">Vestibulares</a></li>
+                        <li><a href="#professores">Professores</a></li>
+                        <li><a href="#metodologia">Metodologia</a></li>
+                        <li><a href="#estrutura">Estrutura</a></li>
+                        <li><a href="#contato">Contato</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="header-right">
+                <a href="https://aluno.forcaisoladas.com.br/" class="btn-login" target="_blank" rel="noopener noreferrer">
+                    <span class="btn-login-text">Portal do aluno</span>
+                    <div class="lock-icon">
+                        <img src="assets/icones/icone-cadeado-fechado.svg" alt="Portal do aluno" class="lock-closed">
+                        <img src="assets/icones/icone-cadeado-aberto.svg" alt="Portal do aluno" class="lock-open">
+                    </div>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Menu Handle (Peek Effect) -->
+    <div id="menu-handle" class="menu-handle"></div>
+
+    <!-- 2. Hero + Formulário Rápido -->
+    <section id="hero" class="hero-section">
+        <div class="hero-mobile-banner" role="img" aria-label="HP Academy"></div>
+        <div class="hero-overlay"></div>
+
+        <div class="container hero-grid">
+            <div class="hero-copy">
+                <span class="hero-eyebrow">HP Academy Students • Matrículas Abertas</span>
+                <h1>Desenvolvimento acadêmico de alto nível para sua <span>aprovação.</span></h1>
+                <p>Mais do que um cursinho: uma academia estruturada para preparar estudantes para o ENEM, SSA/UPE e os vestibulares mais exigentes do país.</p>
+                <div class="hero-actions">
+                    <a href="#vestibulares" class="btn-outline-light">Conhecer o Vestibulares</a>
+                </div>
+            </div>
+
+            <div class="hero-form-card">
+                <form id="hero-form" novalidate>
+                    <input type="hidden" name="origem" value="Hero - Pré-Matrícula">
+                    <span class="form-tag">PRÉ-MATRÍCULA</span>
+                    <p class="form-sub">HP Academy Vestibulares — Garanta sua avaliação diagnóstica.</p>
+
+                    <div class="field">
+                        <label for="hero-nome">Nome</label>
+                        <input id="hero-nome" name="nome" type="text" required autocomplete="name" placeholder="Seu nome completo">
+                    </div>
+
+                    <div class="field">
+                        <label for="hero-telefone">Telefone</label>
+                        <input id="hero-telefone" name="telefone" type="tel" required autocomplete="tel" placeholder="(81) 90000-0000" maxlength="15">
+                    </div>
+
+                    <button type="submit" class="btn-hero-submit">Enviar</button>
+                    <p class="hero-err" id="hero-err"></p>
+                </form>
+
+                <div class="hero-thanks" id="hero-thanks">
+                    <div class="thanks-check">✓</div>
+                    <strong>Obrigado!</strong>
+                    <p>Em breve alguém entrará em contato com você.</p>
+                </div>
+            </div>
+        </div>
     </section>
-  </main>
-  <footer>
-    <img src="assets/HPAcademy_vertical.png" alt="HP Academy"><br>
-    <a href="tel:+5581985008282">(81) 98500-8282</a>
-  </footer>
-<script>
-  const tel = document.getElementById('telefone');
-  tel.addEventListener('input', () => {
-    let v = tel.value.replace(/\D/g,'').slice(0,11);
-    if (v.length > 6) v = `(${v.slice(0,2)}) ${v.slice(2,7)}-${v.slice(7)}`;
-    else if (v.length > 2) v = `(${v.slice(0,2)}) ${v.slice(2)}`;
-    tel.value = v;
-  });
-  document.getElementById('form').addEventListener('submit', async e => {
-    e.preventDefault();
-    const f = e.target, btn = f.querySelector('button'), err = document.getElementById('err');
-    if (tel.value.replace(/\D/g,'').length < 10) { err.textContent = 'Informe um telefone válido.'; return; }
-    btn.disabled = true; err.textContent = '';
-    try {
-      const r = await fetch('/api/lead', { method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ nome:f.nome.value.trim(), telefone:tel.value }) });
-      if (!r.ok) throw 0;
-      f.style.display = 'none';
-      document.getElementById('thanks').style.display = 'block';
-    } catch { err.textContent = 'Erro ao enviar. Tente novamente.'; btn.disabled = false; }
-  });
-</script>
+
+    <!-- 3. Marquee de Universidades -->
+    <section id="faculdades" class="faculdades-section" aria-label="Universidades alvo">
+        <div class="faculdades-track">
+            <!-- Set 1 -->
+            <div class="faculdade-item">
+                <img src="assets/Logotipos/Faculdades/upe-cinza.png" alt="UPE" class="logo-gray">
+                <img src="assets/Logotipos/Faculdades/upe-cor.png" alt="UPE" class="logo-color">
+            </div>
+            <div class="faculdade-item">
+                <img src="assets/Logotipos/Faculdades/ufpe-cinza.png" alt="UFPE" class="logo-gray">
+                <img src="assets/Logotipos/Faculdades/ufpe-cor.png" alt="UFPE" class="logo-color">
+            </div>
+            <div class="faculdade-item">
+                <img src="assets/Logotipos/Faculdades/usp-cinza.png" alt="USP" class="logo-gray">
+                <img src="assets/Logotipos/Faculdades/usp-cor.png" alt="USP" class="logo-color">
+            </div>
+            <div class="faculdade-item">
+                <img src="assets/Logotipos/Faculdades/unicamp-cinza.png" alt="UNICAMP" class="logo-gray">
+                <img src="assets/Logotipos/Faculdades/unicamp-cor.png" alt="UNICAMP" class="logo-color">
+            </div>
+            <div class="faculdade-item is-single-svg">
+                <img src="assets/fgv-logotipo.svg" alt="FGV" class="logo-single">
+            </div>
+            <div class="faculdade-item is-single-svg">
+                <img src="assets/insper-logotipo.svg" alt="Insper" class="logo-single">
+            </div>
+            <div class="faculdade-item">
+                <img src="assets/Logotipos/Faculdades/ufmg-cinza.png" alt="UFMG" class="logo-gray">
+                <img src="assets/Logotipos/Faculdades/ufmg-cor.png" alt="UFMG" class="logo-color">
+            </div>
+            <div class="faculdade-item">
+                <img src="assets/Logotipos/Faculdades/Unifesp-cinza.png" alt="UNIFESP" class="logo-gray">
+                <img src="assets/Logotipos/Faculdades/Unifesp-cor.png" alt="UNIFESP" class="logo-color">
+            </div>
+            <div class="faculdade-item">
+                <img src="assets/Logotipos/Faculdades/unesp-cinza.png" alt="UNESP" class="logo-gray">
+                <img src="assets/Logotipos/Faculdades/unesp-cor.png" alt="UNESP" class="logo-color">
+            </div>
+
+            <!-- Set 2 (loop contínuo) -->
+            <div class="faculdade-item">
+                <img src="assets/Logotipos/Faculdades/upe-cinza.png" alt="UPE" class="logo-gray">
+                <img src="assets/Logotipos/Faculdades/upe-cor.png" alt="UPE" class="logo-color">
+            </div>
+            <div class="faculdade-item">
+                <img src="assets/Logotipos/Faculdades/ufpe-cinza.png" alt="UFPE" class="logo-gray">
+                <img src="assets/Logotipos/Faculdades/ufpe-cor.png" alt="UFPE" class="logo-color">
+            </div>
+            <div class="faculdade-item">
+                <img src="assets/Logotipos/Faculdades/usp-cinza.png" alt="USP" class="logo-gray">
+                <img src="assets/Logotipos/Faculdades/usp-cor.png" alt="USP" class="logo-color">
+            </div>
+            <div class="faculdade-item">
+                <img src="assets/Logotipos/Faculdades/unicamp-cinza.png" alt="UNICAMP" class="logo-gray">
+                <img src="assets/Logotipos/Faculdades/unicamp-cor.png" alt="UNICAMP" class="logo-color">
+            </div>
+            <div class="faculdade-item is-single-svg">
+                <img src="assets/fgv-logotipo.svg" alt="FGV" class="logo-single">
+            </div>
+            <div class="faculdade-item is-single-svg">
+                <img src="assets/insper-logotipo.svg" alt="Insper" class="logo-single">
+            </div>
+            <div class="faculdade-item">
+                <img src="assets/Logotipos/Faculdades/ufmg-cinza.png" alt="UFMG" class="logo-gray">
+                <img src="assets/Logotipos/Faculdades/ufmg-cor.png" alt="UFMG" class="logo-color">
+            </div>
+            <div class="faculdade-item">
+                <img src="assets/Logotipos/Faculdades/Unifesp-cinza.png" alt="UNIFESP" class="logo-gray">
+                <img src="assets/Logotipos/Faculdades/Unifesp-cor.png" alt="UNIFESP" class="logo-color">
+            </div>
+            <div class="faculdade-item">
+                <img src="assets/Logotipos/Faculdades/unesp-cinza.png" alt="UNESP" class="logo-gray">
+                <img src="assets/Logotipos/Faculdades/unesp-cor.png" alt="UNESP" class="logo-color">
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Ecossistema HP Academy Students — 3 Cards -->
+    <section id="programas" class="programas-section reveal-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">HP ACADEMY STUDENTS</span>
+                <h2 class="section-title">Três programas desenhados para cada etapa da jornada estudantil</h2>
+                <p class="section-subtitle">Do Ensino Fundamental II ao Ensino Médio, entendemos exatamente onde o estudante está para traçar um plano de melhoria sob medida — com ritmo puxado e foco absoluto em resultados.</p>
+            </div>
+
+            <div class="programas-grid">
+                <!-- Card 1: Learning -->
+                <article class="programa-card">
+                    <div class="programa-top">
+                        <div class="programa-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                            </svg>
+                        </div>
+                        <span class="status-pill status-soon">Em breve</span>
+                    </div>
+                    <h3>HP Academy Learning</h3>
+                    <p>Acompanhamento escolar individualizado com diagnóstico preciso e plano personalizado para eliminar lacunas de aprendizagem e construir autonomia acadêmica.</p>
+                </article>
+
+                <!-- Card 2: Advanced -->
+                <article class="programa-card">
+                    <div class="programa-top">
+                        <div class="programa-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="2.5"/>
+                                <ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(30 12 12)"/>
+                                <ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(-30 12 12)"/>
+                                <ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(90 12 12)"/>
+                            </svg>
+                        </div>
+                        <span class="status-pill status-soon">Em breve</span>
+                    </div>
+                    <h3>HP Academy Advanced</h3>
+                    <p>Aprofundamento científico e formação intelectual de longo prazo para alunos de alta performance, com foco em olimpíadas, pesquisa e candidaturas internacionais.</p>
+                </article>
+
+                <!-- Card 3: Vestibulares (Destaque) -->
+                <article class="programa-card is-featured">
+                    <div class="programa-top">
+                        <div class="programa-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22 10 12 5 2 10l10 5 10-5z"/>
+                                <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                            </svg>
+                        </div>
+                        <span class="status-pill status-open">Matrículas Abertas</span>
+                    </div>
+                    <h3>HP Academy Vestibulares</h3>
+                    <p>Preparação estratégica orientada a resultados para ENEM, SSA/UPE e Universidades Paulistas, com turmas niveladas por competência e acompanhamento contínuo.</p>
+                    <a href="#vestibulares" class="programa-cta">
+                        <span>Ver detalhes do programa</span>
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </a>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Foco HP Academy Vestibulares (Versão Enxuta) -->
+    <section id="vestibulares" class="vestibulares-section reveal-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge badge-orange">HP ACADEMY VESTIBULARES</span>
+                <h2 class="section-title">Preparação estratégica, no núcleo certo e no seu nível real</h2>
+                <p class="section-subtitle">Planos de ensino específicos para cada processo seletivo e turmas organizadas pelo seu nível de desenvolvimento acadêmico.</p>
+            </div>
+
+            <!-- Subbloco A: Os 3 Núcleos -->
+            <div class="nucleos-grid">
+                <div class="nucleo-card">
+                    <span class="nucleo-num">01</span>
+                    <h3>Núcleo ENEM</h3>
+                    <p>Conteúdos, competências e habilidades exigidos pelo Exame Nacional do Ensino Médio com estratégia focada em alta pontuação.</p>
+                </div>
+                <div class="nucleo-card">
+                    <span class="nucleo-num">02</span>
+                    <h3>Núcleo Seriado – UPE</h3>
+                    <p>Preparação específica para o Sistema Seriado de Avaliação (SSA), contemplando cada etapa: SSA 1, SSA 2 e SSA 3.</p>
+                </div>
+                <div class="nucleo-card">
+                    <span class="nucleo-num">03</span>
+                    <h3>Universidades Paulistas</h3>
+                    <p>Preparação de alta exigência direcionada aos processos seletivos da USP (FUVEST), UNICAMP, FGV e INSPER.</p>
+                </div>
+            </div>
+
+            <!-- Subbloco B: Nivelamento por Competência (Turma 01 e Turma 02) -->
+            <div class="nivelamento-box">
+                <div class="nivelamento-header">
+                    <span class="nivelamento-kicker">Diferencial Pedagógico</span>
+                    <h3>Nivelamento por competência e área de conhecimento</h3>
+                    <p>Não separamos turmas apenas por série ou idade. Por meio de entrevista e avaliação diagnóstica, classificamos cada estudante separadamente por área — permitindo, por exemplo, estar no nível avançado em Matemática e no intermediário em Linguagens, com reavaliações periódicas.</p>
+                </div>
+
+                <div class="turmas-grid">
+                    <div class="turma-card turma-01">
+                        <div class="turma-head">
+                            <span class="turma-code">TURMA 01</span>
+                            <span class="turma-pill">Desenvolvimento e consolidação</span>
+                        </div>
+                        <h4>Nível básico e intermediário</h4>
+                        <p>Destinada a estudantes que apresentam conhecimentos fundamentais em desenvolvimento e precisam consolidar conteúdos, competências e habilidades para avançar com segurança.</p>
+                    </div>
+
+                    <div class="turma-card turma-02">
+                        <div class="turma-head">
+                            <span class="turma-code">TURMA 02</span>
+                            <span class="turma-pill">Aprofundamento e alta performance</span>
+                        </div>
+                        <h4>Nível intermediário e avançado</h4>
+                        <p>Destinada a estudantes que demonstram maior domínio dos conteúdos, autonomia intelectual e capacidade de acompanhar atividades de maior complexidade e aprofundamento.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Corpo Acadêmico (Professores — elevado para posição 6) -->
+    <section id="professores" class="professores-section">
+        <div class="container" style="text-align: center;">
+            <span class="section-badge">CORPO ACADÊMICO</span>
+            <h2 class="professores-titulo">Quem constrói o resultado</h2>
+
+            <div class="professores-grid">
+                <!-- Card 1: Paulo Wendel -->
+                <div class="professor-card" data-slug="wendel">
+                    <img src="assets/Fotos/Professores/wendel-cor.png" class="professor-img" alt="Paulo Wendel">
+
+                    <div class="card-overlay state-1">
+                        <div class="professor-info">
+                            <h3 class="professor-nome">Paulo Wendel</h3>
+                            <span class="professor-disc">Química</span>
+                            <p class="professor-bio">Engenheiro Químico (UFPE), autor de livros didáticos e fundador. Mais de 20 anos estruturando a preparação de alunos para vestibulares de alta performance.</p>
+                        </div>
+                        <button class="btn-agendar btn-step1">Converse com Paulo</button>
+                    </div>
+
+                    <div class="card-overlay state-2">
+                        <div class="form-wrapper">
+                            <h3 class="form-titulo">Mande um "oi" para Paulo! 👋</h3>
+                            <form class="lead-form">
+                                <input type="hidden" name="professor" value="Paulo Wendel - Química">
+                                <input type="hidden" name="origem" value="Professores - Paulo Wendel">
+                                <input type="text" name="nome" class="form-input" placeholder="Nome" required>
+                                <input type="tel" name="telefone" class="form-input tel-mask" placeholder="Telefone" required>
+                                <label class="lgpd-checkbox"><input type="checkbox" name="lgpd"><span>Permito que a HP Academy salve meus dados e os trate com respeito e em acordo com a Lei.</span></label>
+                                <button type="submit" class="btn-enviar-wpp"><span class="btn-text">Enviar</span><img src="assets/icones/icone-whatsapp-negativo.svg" alt="WhatsApp" class="wpp-icon"></button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="card-overlay state-3">
+                        <div class="success-message">
+                            <p>Sua mensagem foi enviada com sucesso. ✅</p>
+                            <p>Em breve, Paulo entrará em contato com você. 😊</p>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar-fill"></div>
+                        </div>
+                    </div>
+
+                    <!-- MOBILE ONLY -->
+                    <div class="prof-img-mobile-wrapper">
+                        <img class="prof-img-small" src="assets/Fotos/Professores/professores-300x200/wendel-cor 300x200.jpg" alt="Rosto Paulo Wendel">
+                        <img class="prof-img-large" src="assets/Fotos/Professores/professores-600x800/wendel-cor 600x800.jpg" alt="Busto Paulo Wendel">
+                    </div>
+                    <div class="prof-mobile-content">
+                        <div class="prof-mobile-header">
+                            <div class="prof-mobile-text">
+                                <span class="prof-mobile-nome">Paulo Wendel</span>
+                                <span class="prof-mobile-materia">Química</span>
+                            </div>
+                            <img src="assets/icones/icone-seta-baixo-preta.svg" class="prof-mobile-arrow" alt="Expandir">
+                        </div>
+                        <div class="prof-mobile-expandable">
+                            <div class="prof-mobile-expandable-inner">
+                                <p class="prof-mobile-bio">Engenheiro Químico (UFPE), autor de livros didáticos e fundador. Mais de 20 anos estruturando a preparação de alunos para vestibulares de alta performance.</p>
+                                <button class="btn-mobile-prof" data-origem="Professores Mobile" data-professor="Paulo Wendel - Química">Fale com Paulo</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2: Tiago Melo -->
+                <div class="professor-card" data-slug="tiago">
+                    <img src="assets/Fotos/Professores/tiago-cor.png" class="professor-img" alt="Tiago Melo">
+                    <div class="card-overlay state-1">
+                        <div class="professor-info">
+                            <h3 class="professor-nome">Tiago Melo</h3>
+                            <span class="professor-disc">Biologia</span>
+                            <p class="professor-bio">Mestre em Biotecnologia e especialista em Anatomia. Mais de 20 anos de experiência em preparação para ENEM e vestibulares.</p>
+                        </div>
+                        <button class="btn-agendar btn-step1">Converse com Tiago</button>
+                    </div>
+                    <div class="card-overlay state-2">
+                        <div class="form-wrapper">
+                            <h3 class="form-titulo">Mande um "oi" para Tiago! 👋</h3>
+                            <form class="lead-form">
+                                <input type="hidden" name="professor" value="Tiago Melo - Biologia">
+                                <input type="hidden" name="origem" value="Professores - Tiago Melo">
+                                <input type="text" name="nome" class="form-input" placeholder="Nome" required>
+                                <input type="tel" name="telefone" class="form-input tel-mask" placeholder="Telefone" required>
+                                <label class="lgpd-checkbox"><input type="checkbox" name="lgpd"><span>Permito que a HP Academy salve meus dados e os trate com respeito e em acordo com a Lei.</span></label>
+                                <button type="submit" class="btn-enviar-wpp"><span class="btn-text">Enviar</span><img src="assets/icones/icone-whatsapp-negativo.svg" alt="WhatsApp" class="wpp-icon"></button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card-overlay state-3">
+                        <div class="success-message">
+                            <p>Sua mensagem foi enviada com sucesso. ✅</p>
+                            <p>Em breve, Tiago entrará em contato com você. 😊</p>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar-fill"></div>
+                        </div>
+                    </div>
+                    <!-- MOBILE ONLY -->
+                    <div class="prof-img-mobile-wrapper">
+                        <img class="prof-img-small" src="assets/Fotos/Professores/professores-300x200/tiago-cor 300x200.jpg" alt="Rosto Tiago Melo">
+                        <img class="prof-img-large" src="assets/Fotos/Professores/professores-600x800/tiago-cor 600x800.jpg" alt="Busto Tiago Melo">
+                    </div>
+                    <div class="prof-mobile-content">
+                        <div class="prof-mobile-header">
+                            <div class="prof-mobile-text">
+                                <span class="prof-mobile-nome">Tiago Melo</span>
+                                <span class="prof-mobile-materia">Biologia</span>
+                            </div>
+                            <img src="assets/icones/icone-seta-baixo-preta.svg" class="prof-mobile-arrow" alt="Expandir">
+                        </div>
+                        <div class="prof-mobile-expandable">
+                            <div class="prof-mobile-expandable-inner">
+                                <p class="prof-mobile-bio">Mestre em Biotecnologia e especialista em Anatomia. Mais de 20 anos de experiência em preparação para ENEM e vestibulares.</p>
+                                <button class="btn-mobile-prof" data-origem="Professores Mobile" data-professor="Tiago Melo - Biologia">Fale com Tiago</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3: Jorge Bandeira -->
+                <div class="professor-card" data-slug="jorge">
+                    <img src="assets/Fotos/Professores/jorge-cor.png" class="professor-img" alt="Jorge Bandeira">
+                    <div class="card-overlay state-1">
+                        <div class="professor-info">
+                            <h3 class="professor-nome">Jorge Bandeira</h3>
+                            <span class="professor-disc">Física</span>
+                            <p class="professor-bio">Mestre em Física (UFRPE). Atua na preparação para ENEM, SSA e vestibulares de alta performance com foco em resolução estratégica.</p>
+                        </div>
+                        <button class="btn-agendar btn-step1">Converse com Jorge</button>
+                    </div>
+                    <div class="card-overlay state-2">
+                        <div class="form-wrapper">
+                            <h3 class="form-titulo">Mande um "oi" para Jorge! 👋</h3>
+                            <form class="lead-form">
+                                <input type="hidden" name="professor" value="Jorge Bandeira - Física">
+                                <input type="hidden" name="origem" value="Professores - Jorge Bandeira">
+                                <input type="text" name="nome" class="form-input" placeholder="Nome" required>
+                                <input type="tel" name="telefone" class="form-input tel-mask" placeholder="Telefone" required>
+                                <label class="lgpd-checkbox"><input type="checkbox" name="lgpd"><span>Permito que a HP Academy salve meus dados e os trate com respeito e em acordo com a Lei.</span></label>
+                                <button type="submit" class="btn-enviar-wpp"><span class="btn-text">Enviar</span><img src="assets/icones/icone-whatsapp-negativo.svg" alt="WhatsApp" class="wpp-icon"></button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card-overlay state-3">
+                        <div class="success-message">
+                            <p>Sua mensagem foi enviada com sucesso. ✅</p>
+                            <p>Em breve, Jorge entrará em contato com você. 😊</p>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar-fill"></div>
+                        </div>
+                    </div>
+                    <!-- MOBILE ONLY -->
+                    <div class="prof-img-mobile-wrapper">
+                        <img class="prof-img-small" src="assets/Fotos/Professores/professores-300x200/jorge-cor 300x200.jpg" alt="Rosto Jorge Bandeira">
+                        <img class="prof-img-large" src="assets/Fotos/Professores/professores-600x800/jorge-cor 600x800.jpg" alt="Busto Jorge Bandeira">
+                    </div>
+                    <div class="prof-mobile-content">
+                        <div class="prof-mobile-header">
+                            <div class="prof-mobile-text">
+                                <span class="prof-mobile-nome">Jorge Bandeira</span>
+                                <span class="prof-mobile-materia">Física</span>
+                            </div>
+                            <img src="assets/icones/icone-seta-baixo-preta.svg" class="prof-mobile-arrow" alt="Expandir">
+                        </div>
+                        <div class="prof-mobile-expandable">
+                            <div class="prof-mobile-expandable-inner">
+                                <p class="prof-mobile-bio">Mestre em Física (UFRPE). Atua na preparação para ENEM, SSA e vestibulares de alta performance com foco em resolução estratégica.</p>
+                                <button class="btn-mobile-prof" data-origem="Professores Mobile" data-professor="Jorge Bandeira - Física">Fale com Jorge</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4: Fabiano Nader -->
+                <div class="professor-card" data-slug="fabiano">
+                    <img src="assets/Fotos/Professores/fabiano-cor.png" class="professor-img" alt="Fabiano Nader">
+                    <div class="card-overlay state-1">
+                        <div class="professor-info">
+                            <h3 class="professor-nome">Fabiano Nader</h3>
+                            <span class="professor-disc">Matemática</span>
+                            <p class="professor-bio">Mestre em Matemática (UFRPE) e engenheiro mecânico (UPE). Mais de 30 anos de experiência na preparação para ENEM e vestibulares.</p>
+                        </div>
+                        <button class="btn-agendar btn-step1">Converse com Fabiano</button>
+                    </div>
+                    <div class="card-overlay state-2">
+                        <div class="form-wrapper">
+                            <h3 class="form-titulo">Mande um "oi" para Fabiano! 👋</h3>
+                            <form class="lead-form">
+                                <input type="hidden" name="professor" value="Fabiano Nader - Matemática">
+                                <input type="hidden" name="origem" value="Professores - Fabiano Nader">
+                                <input type="text" name="nome" class="form-input" placeholder="Nome" required>
+                                <input type="tel" name="telefone" class="form-input tel-mask" placeholder="Telefone" required>
+                                <label class="lgpd-checkbox"><input type="checkbox" name="lgpd"><span>Permito que a HP Academy salve meus dados e os trate com respeito e em acordo com a Lei.</span></label>
+                                <button type="submit" class="btn-enviar-wpp"><span class="btn-text">Enviar</span><img src="assets/icones/icone-whatsapp-negativo.svg" alt="WhatsApp" class="wpp-icon"></button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card-overlay state-3">
+                        <div class="success-message">
+                            <p>Sua mensagem foi enviada com sucesso. ✅</p>
+                            <p>Em breve, Fabiano entrará em contato com você. 😊</p>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar-fill"></div>
+                        </div>
+                    </div>
+                    <!-- MOBILE ONLY -->
+                    <div class="prof-img-mobile-wrapper">
+                        <img class="prof-img-small" src="assets/Fotos/Professores/professores-300x200/fabiano-cor 300x200.jpg" alt="Rosto Fabiano Nader">
+                        <img class="prof-img-large" src="assets/Fotos/Professores/professores-600x800/fabiano-cor 600x800.jpg" alt="Busto Fabiano Nader">
+                    </div>
+                    <div class="prof-mobile-content">
+                        <div class="prof-mobile-header">
+                            <div class="prof-mobile-text">
+                                <span class="prof-mobile-nome">Fabiano Nader</span>
+                                <span class="prof-mobile-materia">Matemática</span>
+                            </div>
+                            <img src="assets/icones/icone-seta-baixo-preta.svg" class="prof-mobile-arrow" alt="Expandir">
+                        </div>
+                        <div class="prof-mobile-expandable">
+                            <div class="prof-mobile-expandable-inner">
+                                <p class="prof-mobile-bio">Mestre em Matemática (UFRPE) e engenheiro mecânico (UPE). Mais de 30 anos de experiência na preparação para ENEM e vestibulares.</p>
+                                <button class="btn-mobile-prof" data-origem="Professores Mobile" data-professor="Fabiano Nader - Matemática">Fale com Fabiano</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 5: Cláudio Ribeiro -->
+                <div class="professor-card" data-slug="claudio">
+                    <img src="assets/Fotos/Professores/Claudiohenriqueribeiro-cor.png" class="professor-img" alt="Cláudio Ribeiro">
+                    <div class="card-overlay state-1">
+                        <div class="professor-info">
+                            <h3 class="professor-nome">Cláudio Ribeiro</h3>
+                            <span class="professor-disc">Literatura e História da Arte</span>
+                            <p class="professor-bio">Especialista em História da Arte (USP) e autor. Atua no desenvolvimento de repertório e leitura crítica para provas e redação.</p>
+                        </div>
+                        <button class="btn-agendar btn-step1">Converse com Cláudio</button>
+                    </div>
+                    <div class="card-overlay state-2">
+                        <div class="form-wrapper">
+                            <h3 class="form-titulo">Mande um "oi" para Cláudio! 👋</h3>
+                            <form class="lead-form">
+                                <input type="hidden" name="professor" value="Cláudio Ribeiro - Linguagens">
+                                <input type="hidden" name="origem" value="Professores - Cláudio Ribeiro">
+                                <input type="text" name="nome" class="form-input" placeholder="Nome" required>
+                                <input type="tel" name="telefone" class="form-input tel-mask" placeholder="Telefone" required>
+                                <label class="lgpd-checkbox"><input type="checkbox" name="lgpd"><span>Permito que a HP Academy salve meus dados e os trate com respeito e em acordo com a Lei.</span></label>
+                                <button type="submit" class="btn-enviar-wpp"><span class="btn-text">Enviar</span><img src="assets/icones/icone-whatsapp-negativo.svg" alt="WhatsApp" class="wpp-icon"></button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card-overlay state-3">
+                        <div class="success-message">
+                            <p>Sua mensagem foi enviada com sucesso. ✅</p>
+                            <p>Em breve, Cláudio entrará em contato com você. 😊</p>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar-fill"></div>
+                        </div>
+                    </div>
+                    <!-- MOBILE ONLY -->
+                    <div class="prof-img-mobile-wrapper">
+                        <img class="prof-img-small" src="assets/Fotos/Professores/professores-300x200/Claudiohenriqueribeiro-cor 300x200.jpg" alt="Rosto Cláudio Ribeiro">
+                        <img class="prof-img-large" src="assets/Fotos/Professores/professores-600x800/Claudiohenriqueribeiro-cor 600x800.jpg" alt="Busto Cláudio Ribeiro">
+                    </div>
+                    <div class="prof-mobile-content">
+                        <div class="prof-mobile-header">
+                            <div class="prof-mobile-text">
+                                <span class="prof-mobile-nome">Cláudio Ribeiro</span>
+                                <span class="prof-mobile-materia">Literatura e História da Arte</span>
+                            </div>
+                            <img src="assets/icones/icone-seta-baixo-preta.svg" class="prof-mobile-arrow" alt="Expandir">
+                        </div>
+                        <div class="prof-mobile-expandable">
+                            <div class="prof-mobile-expandable-inner">
+                                <p class="prof-mobile-bio">Especialista em História da Arte (USP) e autor. Atua no desenvolvimento de repertório e leitura crítica para provas e redação.</p>
+                                <button class="btn-mobile-prof" data-origem="Professores Mobile" data-professor="Cláudio Ribeiro - Linguagens">Fale com Cláudio</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 6: Esther Souza -->
+                <div class="professor-card" data-slug="esther">
+                    <img src="assets/Fotos/Professores/esthersouza-cor.png" class="professor-img" alt="Esther Souza">
+                    <div class="card-overlay state-1">
+                        <div class="professor-info">
+                            <h3 class="professor-nome">Esther Souza</h3>
+                            <span class="professor-disc">Português e Redação</span>
+                            <p class="professor-bio">Professora formada pela UPE, com 10 anos de experiência. Especialista em redação para vestibulares com foco em evolução estruturada.</p>
+                        </div>
+                        <button class="btn-agendar btn-step1">Converse com Esther</button>
+                    </div>
+                    <div class="card-overlay state-2">
+                        <div class="form-wrapper">
+                            <h3 class="form-titulo">Mande um "oi" para Esther! 👋</h3>
+                            <form class="lead-form">
+                                <input type="hidden" name="professor" value="Esther Souza - Redação">
+                                <input type="hidden" name="origem" value="Professores - Esther Souza">
+                                <input type="text" name="nome" class="form-input" placeholder="Nome" required>
+                                <input type="tel" name="telefone" class="form-input tel-mask" placeholder="Telefone" required>
+                                <label class="lgpd-checkbox"><input type="checkbox" name="lgpd"><span>Permito que a HP Academy salve meus dados e os trate com respeito e em acordo com a Lei.</span></label>
+                                <button type="submit" class="btn-enviar-wpp"><span class="btn-text">Enviar</span><img src="assets/icones/icone-whatsapp-negativo.svg" alt="WhatsApp" class="wpp-icon"></button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card-overlay state-3">
+                        <div class="success-message">
+                            <p>Sua mensagem foi enviada com sucesso. ✅</p>
+                            <p>Em breve, Esther entrará em contato com você. 😊</p>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar-fill"></div>
+                        </div>
+                    </div>
+                    <!-- MOBILE ONLY -->
+                    <div class="prof-img-mobile-wrapper">
+                        <img class="prof-img-small" src="assets/Fotos/Professores/professores-300x200/esthersouza-cor 300x200.jpg" alt="Rosto Esther Souza">
+                        <img class="prof-img-large" src="assets/Fotos/Professores/professores-600x800/esthersouza-cor 600x800.jpg" alt="Busto Esther Souza">
+                    </div>
+                    <div class="prof-mobile-content">
+                        <div class="prof-mobile-header">
+                            <div class="prof-mobile-text">
+                                <span class="prof-mobile-nome">Esther Souza</span>
+                                <span class="prof-mobile-materia">Português e Redação</span>
+                            </div>
+                            <img src="assets/icones/icone-seta-baixo-preta.svg" class="prof-mobile-arrow" alt="Expandir">
+                        </div>
+                        <div class="prof-mobile-expandable">
+                            <div class="prof-mobile-expandable-inner">
+                                <p class="prof-mobile-bio">Professora formada pela UPE, com 10 anos de experiência. Especialista em redação para vestibulares com foco em evolução estruturada.</p>
+                                <button class="btn-mobile-prof" data-origem="Professores Mobile" data-professor="Esther Souza - Redação">Fale com Esther</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Metodologia e Estrutura de Entrega — Os 6 Pilares (apenas títulos + hover moderno) -->
+    <section id="metodologia" class="pilares-section reveal-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">METODOLOGIA</span>
+                <h2 class="section-title">Seis pilares integrados para transformar estudo em resultado</h2>
+            </div>
+
+            <div class="pilares-grid">
+                <div class="pilar-card">
+                    <span class="pilar-num">01</span>
+                    <div class="pilar-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h20v14H2z"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>
+                    </div>
+                    <h3>Aulas teóricas</h3>
+                </div>
+
+                <div class="pilar-card">
+                    <span class="pilar-num">02</span>
+                    <div class="pilar-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <h3>Monitoria e tutoria</h3>
+                </div>
+
+                <div class="pilar-card">
+                    <span class="pilar-num">03</span>
+                    <div class="pilar-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6"/><path d="M10 3v6.5L4.5 19a2 2 0 0 0 1.7 3h11.6a2 2 0 0 0 1.7-3L14 9.5V3"/><path d="M8.5 14h7"/></svg>
+                    </div>
+                    <h3>Aulas experimentais</h3>
+                </div>
+
+                <div class="pilar-card">
+                    <span class="pilar-num">04</span>
+                    <div class="pilar-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg>
+                    </div>
+                    <h3>Banco de questões</h3>
+                </div>
+
+                <div class="pilar-card">
+                    <span class="pilar-num">05</span>
+                    <div class="pilar-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                    </div>
+                    <h3>Simulados</h3>
+                </div>
+
+                <div class="pilar-card">
+                    <span class="pilar-num">06</span>
+                    <div class="pilar-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                    </div>
+                    <h3>Plantão de dúvidas</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. Seção da Missão -->
+    <section id="conceito" class="conceito-section">
+        <div class="container conceito-container">
+            <span class="section-badge">NOSSA MISSÃO</span>
+            <h2 class="conceito-titulo">Não somos apenas um curso preparatório. Somos uma academia de <span>desenvolvimento estudantil.</span></h2>
+            <p class="conceito-subtitulo">Diagnóstico preciso, plano sob medida e ambiente de alta exigência para transformar esforço em aprovação.</p>
+        </div>
+    </section>
+
+    <!-- 9. Seção Estrutura -->
+    <section id="estrutura" class="estrutura-section">
+        <div class="container container-estrutura">
+            <!-- Coluna 1: Textos -->
+            <div class="estrutura-textos">
+                <span class="badge-branca">ESTRUTURA</span>
+                <h2 class="estrutura-titulo">Um espaço smart pensado para turmas menores e foco absoluto</h2>
+                <p class="estrutura-descricao">Agora no <strong>Grand Tower Shopping</strong>, na Rua Bruno Veloso em Boa Viagem. Um espaço com sala de aula smart, adequado à nossa nova visão de projeto: turmas reduzidas, acompanhamento personalizado e excelente localização ao lado do shopping.</p>
+                <a href="#" class="btn-pilula" data-origem="Estrutura - Agendar Visita"
+                    data-mensagem="Olá! Vim do site da HP Academy e gostaria de agendar uma visita ao espaço no Grand Tower Shopping.">Agende uma visita</a>
+            </div>
+
+            <!-- Coluna 2: Galeria -->
+            <div class="estrutura-galeria" id="galeria-estrutura">
+                <div class="galeria-principal-wrapper">
+                    <div class="galeria-principal">
+                        <img id="img-principal" src="assets/Fotos/Estrutura/HP-fachada-predio.png" alt="Fachada Grand Tower Shopping - HP Academy">
+
+                        <!-- Nav Controls -->
+                        <button class="nav-bolinha prev" id="btn-prev" aria-label="Foto anterior">
+                            <img src="assets/icones/icone-seta-direita-negativa.svg" alt="Anterior" class="nav-icon-default">
+                            <img src="assets/icones/icone-seta-direita-negativa.svg" alt="Anterior" class="nav-icon-hover">
+                        </button>
+                        <button class="nav-bolinha next" id="btn-next" aria-label="Próxima foto">
+                            <img src="assets/icones/icone-seta-direita-negativa.svg" alt="Próximo" class="nav-icon-default">
+                            <img src="assets/icones/icone-seta-direita-negativa.svg" alt="Próximo" class="nav-icon-hover">
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Miniaturas (Desktop Only) -->
+                <div class="galeria-miniaturas">
+                    <div class="miniatura active" data-index="0">
+                        <img src="assets/Fotos/Estrutura/HP-fachada-predio.png" alt="Fachada Grand Tower Shopping">
+                    </div>
+                    <div class="miniatura" data-index="1">
+                        <img src="assets/Fotos/Estrutura/estrutura_Sala de aula 1.png" alt="Sala de Aula 1">
+                    </div>
+                    <div class="miniatura" data-index="2">
+                        <img src="assets/Fotos/Estrutura/estrutura_Sala de Aula 2.png" alt="Sala de Aula 2">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 10. Formulário Horizontal -->
+    <section id="contato" class="contato-section">
+        <div class="container container-contato">
+            <span class="section-badge badge-orange">PRÉ-MATRÍCULA</span>
+            <h2 class="contato-titulo">Dê o primeiro passo na sua aprovação</h2>
+
+            <div class="form-container" id="form-wrapper">
+                <form id="form-contato" class="contato-form">
+                    <input type="hidden" name="origem" value="Formulário Final - Site HP Academy">
+                    <div class="input-group">
+                        <input type="text" id="nome" name="nome" placeholder="Seu nome" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="email" id="email" name="email" placeholder="Seu melhor e-mail" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="tel" id="telefone" name="telefone" placeholder="+55 (81) 99999-9999" required>
+                    </div>
+                    <button type="submit" id="btn-submit" class="btn-submit">
+                        <span class="btn-text">Quero me matricular</span>
+                    </button>
+                    <p class="texto-juridico">
+                        Ao enviar, concordo que meus dados sejam protegidos e utilizados exclusivamente pela equipe da HP Academy para contato.
+                    </p>
+                </form>
+
+                <!-- Barra de Tempo (Timer Bar) -->
+                <div id="contato-timer-container" class="timer-bar-container">
+                    <div id="contato-timer-fill" class="timer-bar-fill"></div>
+                </div>
+
+                <!-- Mensagem de Sucesso -->
+                <div id="success-message" class="success-message">
+                    <p class="success-text">Obrigado! Em breve alguém da equipe da HP Academy entrará em contato com você.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Back to Top Button -->
+    <button id="btn-back-to-top" class="back-to-top" aria-label="Voltar ao topo">
+        <img src="assets/icones/icone-seta-cima-preta.svg" alt="Voltar ao topo" class="btt-icon-default">
+        <img src="assets/icones/icone-seta-cima-cinza.svg" alt="Voltar ao topo" class="btt-icon-hover">
+    </button>
+
+    <!-- Rodapé (Footer) -->
+    <footer class="main-footer">
+        <div class="container footer-container">
+            <!-- Coluna 1 -->
+            <div class="footer-col-1">
+                <p class="footer-desc">
+                    Academia de desenvolvimento estudantil em Boa Viagem – Recife, dedicada à preparação estratégica para o ENEM, SSA/UPE e os vestibulares mais exigentes do país.
+                </p>
+                <a href="#" class="btn-footer-cta" data-origem="Rodapé - Fale Conosco"
+                    data-mensagem="Olá! Vim do site da HP Academy e gostaria de mais informações sobre o HP Academy Vestibulares.">
+                    FALE CONOSCO
+                    <img src="assets/icones/icone-whatsapp-preto.svg" alt="WhatsApp">
+                </a>
+            </div>
+
+            <!-- Coluna 2 -->
+            <div class="footer-col-2">
+                <a href="#hero" class="footer-logo">
+                    <img src="assets/HPAcademy_horizontal-negativa.svg" alt="HP Academy">
+                </a>
+                <ul class="footer-contatos">
+                    <li>
+                        <a href="https://instagram.com/hpacademy_recife" target="_blank" rel="noopener noreferrer" class="contato-item">
+                            <div class="contato-icon-wrapper">
+                                <img src="assets/icones/icone-instagram-negativo.svg" alt="Instagram" class="icon-default">
+                                <img src="assets/icones/icone-instagram-cores.svg" alt="Instagram Colorido" class="icon-hover">
+                            </div>
+                            <span>@hpacademy_recife</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="contato-item" data-origem="Rodapé - WhatsApp"
+                            data-mensagem="Olá! Vim do site da HP Academy e gostaria de mais informações sobre os programas.">
+                            <div class="contato-icon-wrapper">
+                                <img src="assets/icones/icone-whatsapp-negativo.svg" alt="WhatsApp" class="icon-default">
+                                <img src="assets/icones/icone-whatsapp-cores.svg" alt="WhatsApp Colorido" class="icon-hover">
+                            </div>
+                            <span>+55 (81) 9 8500-8282</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#estrutura" class="contato-item">
+                            <div class="contato-icon-wrapper">
+                                <img src="assets/icones/icone-localizacao-negativo.svg" alt="Localização" class="icon-default">
+                                <img src="assets/icones/icone-localizacao-cores.svg" alt="Localização Colorida" class="icon-hover">
+                            </div>
+                            <span>Grand Tower Shopping,<br>Rua Bruno Veloso, Boa Viagem – Recife/PE</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container bottom-bar-container">
+                <span class="copyright">© 2026 HP Academy. Todos os direitos reservados.</span>
+                <div class="bottom-links">
+                    <a href="#contato">Política de Privacidade</a>
+                    <a href="https://evaflow.com.br" target="_blank" rel="noopener noreferrer">Eva Automação Inteligente</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal Agende uma Visita / Fale Conosco -->
+    <div id="modal-visita" class="modal-visita-overlay">
+        <div class="modal-visita-box">
+            <button class="modal-close" id="btn-close-modal" aria-label="Fechar">&times;</button>
+            <div id="visita-form-content">
+                <h3 class="modal-titulo">Agende sua visita</h3>
+                <p class="modal-subtitulo">Conheça nosso espaço smart no Grand Tower Shopping.</p>
+                <form id="form-visita" class="lead-form">
+                    <input type="hidden" name="origem" value="Estrutura">
+                    <div class="input-group">
+                        <input type="text" name="nome" placeholder="Seu nome" required class="form-input">
+                    </div>
+                    <div class="input-group">
+                        <input type="tel" name="telefone" placeholder="Seu WhatsApp" required class="form-input tel-mask">
+                    </div>
+                    <button type="submit" class="btn-enviar-wpp">
+                        <span class="btn-text">Enviar</span>
+                        <img src="assets/icones/icone-whatsapp-negativo.svg" alt="WhatsApp" class="wpp-icon">
+                    </button>
+                </form>
+            </div>
+            <!-- Estado de Sucesso -->
+            <div id="visita-success-state" class="visita-success-state" style="display: none;">
+                <p class="success-text">Obrigado! Em breve alguém entrará em contato com você.</p>
+                <div class="visita-progress-container">
+                    <div id="visita-progress-fill" class="visita-progress-fill"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
+
 </html>
