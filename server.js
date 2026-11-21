@@ -235,7 +235,14 @@ http.createServer((req, res) => {
       return res.end('Not found');
     }
     const ext = path.extname(resolved).toLowerCase();
-    res.writeHead(200, { 'Content-Type': MIME[ext] || 'application/octet-stream' });
+    const isMedia = ['.png', '.jpg', '.jpeg', '.webp', '.svg', '.ico'].includes(ext);
+    const cacheControl = isMedia
+      ? 'public, max-age=604800'
+      : (ext === '.css' || ext === '.js' ? 'public, max-age=3600' : 'no-cache');
+    res.writeHead(200, {
+      'Content-Type': MIME[ext] || 'application/octet-stream',
+      'Cache-Control': cacheControl
+    });
     res.end(data);
   });
 }).listen(PORT, () => console.log(`HP Academy rodando em http://localhost:${PORT}`));

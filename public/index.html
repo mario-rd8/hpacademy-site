@@ -19,6 +19,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
 
+    <!-- Preload inteligente das imagens do Hero (Desktop e Mobile) -->
+    <link rel="preload" as="image" href="assets/hp-banner.webp" type="image/webp" media="(min-width: 769px)" fetchpriority="high">
+    <link rel="preload" as="image" href="assets/topo-mobile.webp" type="image/webp" media="(max-width: 768px)" fetchpriority="high">
+
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -86,7 +90,14 @@
 
     <!-- 2. Hero + Formulário Rápido -->
     <section id="hero" class="hero-section">
-        <div class="hero-mobile-banner" role="img" aria-label="HP Academy"></div>
+        <picture class="hero-bg-picture" aria-hidden="true">
+            <source type="image/webp" srcset="assets/hp-banner.webp">
+            <img src="assets/hp-banner-opt.jpg" alt="" fetchpriority="high" loading="eager" decoding="async">
+        </picture>
+        <picture class="hero-mobile-banner">
+            <source type="image/webp" srcset="assets/topo-mobile.webp">
+            <img src="assets/topo-mobile-opt.jpg" alt="HP Academy" fetchpriority="high" loading="eager" decoding="async">
+        </picture>
         <div class="hero-overlay"></div>
 
         <div class="container hero-grid">

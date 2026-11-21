@@ -330,8 +330,25 @@ img {
     display: flex;
     align-items: center;
     padding: 120px 0 72px;
-    background: url('assets/hp-banner.png') 28% center / cover no-repeat;
+    background-color: var(--hp-blue-dark);
     overflow: hidden;
+}
+
+.hero-bg-picture {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.hero-bg-picture img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 28% center;
+    filter: blur(7px);
+    transform: scale(1.07);
+    will-change: transform;
 }
 
 .hero-mobile-banner {
@@ -343,8 +360,8 @@ img {
     inset: 0;
     background: linear-gradient(
         100deg,
-        rgba(1, 45, 99, 0.88) 0%,
-        rgba(1, 45, 99, 0.52) 48%,
+        rgba(1, 45, 99, 0.84) 0%,
+        rgba(1, 45, 99, 0.56) 50%,
         rgba(1, 45, 99, 0.68) 100%
     );
     z-index: 1;
@@ -608,7 +625,7 @@ img {
 
 .faculdade-item {
     flex-shrink: 0;
-    height: 44px;
+    height: 64px;
     display: grid;
     place-items: center;
     cursor: pointer;
@@ -616,9 +633,9 @@ img {
 
 .faculdade-item img {
     grid-area: 1 / 1;
-    height: 42px;
+    height: 62px;
     width: auto;
-    max-width: 130px;
+    max-width: 175px;
     object-fit: contain;
     transition: opacity 0.3s ease, filter 0.3s ease;
 }
@@ -636,7 +653,8 @@ img {
 }
 
 .faculdade-item.is-single-svg .logo-single {
-    height: 34px;
+    height: 36px;
+    max-width: 160px;
     filter: grayscale(100%) opacity(0.5);
 }
 
@@ -2203,6 +2221,7 @@ img {
         background: var(--bg-surface);
     }
 
+    .hero-bg-picture,
     .hero-overlay {
         display: none;
     }
@@ -2211,7 +2230,14 @@ img {
         display: block;
         width: 100%;
         aspect-ratio: 1/1;
-        background: url('assets/topo-mobile.jpg') center / cover no-repeat;
+        overflow: hidden;
+        background: var(--hp-blue-dark);
+    }
+
+    .hero-mobile-banner img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
 
     .hero-grid {
