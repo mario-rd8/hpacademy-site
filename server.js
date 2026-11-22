@@ -1,13 +1,12 @@
 // Servidor Node.js sem dependências externas:
 // 1. Serve o site estático da HP Academy (public/ e assets/)
 // 2. Recebe leads em POST /api/lead (todos os formulários do site)
-// 3. Dispara mensagem para o WhatsApp via Evolution API
-// 4. Grava diretamente no Google Sheets via API v4 (Service Account, sem n8n)
+// 3. Dispara notificação para o WhatsApp via Evolution API
+// 4. Envia o lead diretamente para o HP Academy CRM (https://crm.hpacademy.com.br/api/webhooks/lead)
 
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
-const crypto = require('crypto');
 
 // Carrega .env local (em produção, use as variáveis de ambiente do Coolify)
 try {
@@ -29,27 +28,9 @@ const EVO_INSTANCE = process.env.EVOLUTION_INSTANCE || '';
 const EVO_KEY = process.env.EVOLUTION_API_KEY || '';
 const DESTINOS = (process.env.WHATSAPP_DESTINOS || '5581988090458,5581985008282').split(',').map(s => s.trim()).filter(Boolean);
 
-// Configuração Google Sheets (Service Account — sem n8n)
-const GOOGLE_SHEET_ID = process.env.GOOGLE_SHEET_ID || '1_owQtLlbedfDoM5UM4UndAStRnRCJf6Ut0y6HLeinGU';
-const GOOGLE_SHEET_RANGE = process.env.GOOGLE_SHEET_RANGE || 'A:F';
-
-function getGoogleCredentials() {
-  if (process.env.GOOGLE_SERVICE_ACCOUNT_JSON) {
-    try {
-      const parsed = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_JSON);
-      return { email: parsed.client_email, key: (parsed.private_key || '').replace(/\\n/g, '\n') };
-    } catch (e) {
-      console.error('GOOGLE_SERVICE_ACCOUNT_JSON inválido:', e.message);
-    }
-  }
-  if (process.env.GOOGLE_CLIENT_EMAIL && process.env.GOOGLE_PRIVATE_KEY) {
-    return {
-      email: process.env.GOOGLE_CLIENT_EMAIL.trim(),
-      key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n')
-    };
-  }
-  return null;
-}
+// Configuração HP Academy CRM
+const CRM_WEBHOOK_URL = (process.env.CRM_WEBHOOK_URL || 'https://crm.hpacademy.com.br/api/webhooks/lead').trim();
+const CRM_WEBHOOK_SECRET = (process.env.CRM_WEBHOOK_SECRET || '').trim();
 
 const MIME = {
   '.html': 'text/html; charset=utf-8',
@@ -66,52 +47,18 @@ const MIME = {
 
 const ROOT = __dirname;
 
-// Cache simples do token OAuth2 do Google (válido ~55 min)
-let cachedToken = { token: null, exp: 0 };
+function extrairTags({ origem, professor }) {
+  const texto = `${origem || ''} ${professor || ''}`
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase();
 
-function base64url(input) {
-  return Buffer.from(input).toString('base64').replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
-}
-
-async function getGoogleAccessToken() {
-  const creds = getGoogleCredentials();
-  if (!creds || !creds.email || !creds.key) return null;
-
-  const now = Math.floor(Date.now() / 1000);
-  if (cachedToken.token && cachedToken.exp > now + 60) {
-    return cachedToken.token;
-  }
-
-  const header = base64url(JSON.stringify({ alg: 'RS256', typ: 'JWT' }));
-  const payload = base64url(JSON.stringify({
-    iss: creds.email,
-    scope: 'https://www.googleapis.com/auth/spreadsheets',
-    aud: 'https://oauth2.googleapis.com/token',
-    iat: now,
-    exp: now + 3600
-  }));
-
-  const signingInput = `${header}.${payload}`;
-  const sign = crypto.createSign('RSA-SHA256');
-  sign.update(signingInput);
-  sign.end();
-  const signature = sign.sign(creds.key).toString('base64').replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
-  const assertion = `${signingInput}.${signature}`;
-
-  const res = await fetch('https://oauth2.googleapis.com/token', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: `grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer&assertion=${assertion}`
-  });
-
-  if (!res.ok) {
-    const errText = await res.text();
-    throw new Error(`Google OAuth erro ${res.status}: ${errText}`);
-  }
-
-  const data = await res.json();
-  cachedToken = { token: data.access_token, exp: now + (data.expires_in || 3500) };
-  return data.access_token;
+  const tags = [];
+  if (texto.includes('enem')) tags.push('enem');
+  if (texto.includes('ssa') || texto.includes('upe')) tags.push('ssa');
+  if (texto.includes('paulista') || /\bsp\b/.test(texto)) tags.push('sp');
+  if (texto.includes('f2') || texto.includes('fundamental')) tags.push('F2');
+  return tags;
 }
 
 async function enviarWhatsApp({ nome, telefone, email, origem, professor }) {
@@ -142,30 +89,35 @@ async function enviarWhatsApp({ nome, telefone, email, origem, professor }) {
   }
 }
 
-async function salvarPlanilha({ nome, telefone, email, origem, professor }) {
-  const token = await getGoogleAccessToken();
-  if (!token) {
-    console.warn('Google Service Account não configurada; gravação na planilha ignorada.');
+async function enviarParaCrm({ nome, telefone, origem, professor }) {
+  if (!CRM_WEBHOOK_URL) {
+    console.warn('CRM_WEBHOOK_URL não configurada; envio para o CRM ignorado.');
     return;
   }
-  const dataHora = new Date().toLocaleString('pt-BR', { timeZone: 'America/Recife' });
-  const range = encodeURIComponent(GOOGLE_SHEET_RANGE);
-  const url = `https://sheets.googleapis.com/v4/spreadsheets/${GOOGLE_SHEET_ID}/values/${range}:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`;
 
-  const res = await fetch(url, {
+  const origemFormatada = professor
+    ? `${origem || 'Site HP Academy'} (${professor})`
+    : (origem || 'Site HP Academy');
+
+  const headers = { 'Content-Type': 'application/json' };
+  if (CRM_WEBHOOK_SECRET) {
+    headers['x-webhook-secret'] = CRM_WEBHOOK_SECRET;
+  }
+
+  const res = await fetch(CRM_WEBHOOK_URL, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`
-    },
+    headers,
     body: JSON.stringify({
-      values: [[nome, telefone, email || '', origem || 'Site HP Academy', professor || '', dataHora]]
+      nome,
+      telefone,
+      origem: origemFormatada,
+      tags: extrairTags({ origem, professor })
     })
   });
 
   if (!res.ok) {
-    const errText = await res.text();
-    throw new Error(`Google Sheets erro ${res.status}: ${errText}`);
+    const errText = await res.text().catch(() => '');
+    throw new Error(`HP Academy CRM erro ${res.status}: ${errText}`);
   }
 }
 
@@ -194,16 +146,15 @@ http.createServer((req, res) => {
 
         const results = await Promise.allSettled([
           enviarWhatsApp(lead),
-          salvarPlanilha(lead)
+          enviarParaCrm(lead)
         ]);
 
         results.forEach((r, idx) => {
           if (r.status === 'rejected') {
-            console.error(idx === 0 ? 'Erro WhatsApp:' : 'Erro Planilha:', r.reason);
+            console.error(idx === 0 ? 'Erro WhatsApp:' : 'Erro CRM:', r.reason);
           }
         });
 
-        // Se o WhatsApp falhou e a planilha também falhou, retorna 500
         if (results.every(r => r.status === 'rejected')) {
           res.writeHead(500, { 'Content-Type': 'application/json' });
           return res.end('{"ok":false,"error":"Falha no processamento"}');
